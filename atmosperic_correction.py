@@ -1,6 +1,7 @@
 import numpy as np 
 import math
 from global_land_mask import globe 
+import funcions_autonom as f ##hvis ting blir kaos kan det vøre denne
 
 def rss_atm_corrected(who_var_wavelwngths, cla_atm_data):
     rss_atmc = []
@@ -33,6 +34,19 @@ def rss_given_pixels(rows, columns, rss_data):
             rss_given.append(rss_data[:, rows[i], columns[i]])
         
     return np.array(rss_given)
+
+def rss_matrix_for_several_Areas_same_picture(target_lat_matrix, target_lon_matrix, latitudes, longitudes, rss_all):
+    rss_area_matrix = []
+    for i in range(len(target_lat_matrix)):
+        #matrise[i] -> en hel rad 
+        start_end_row, start_end_col = f.latLong_to_piksel(target_lat_matrix[i], target_lon_matrix[i], latitudes, longitudes)
+        area_in_piksels_row, area_in_piksels_col = piksles_in_slected_area(start_end_row, start_end_col, latitudes, longitudes)
+        rss_area = rss_given_pixels(area_in_piksels_row, area_in_piksels_col, rss_all)
+        rss_area_matrix.append(rss_area)
+    
+    return rss_area_matrix #kan ikke gjøre til np.array her fordi listene har ulik størrelse 
+
+
 
 
      
