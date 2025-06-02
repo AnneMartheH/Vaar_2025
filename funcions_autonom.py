@@ -266,3 +266,27 @@ def water_masked_chl(row, column, satobj_h1, chl):
 
     print("Pixel number: ", pixelNr)
     return chl_values
+
+def hyps1_rss_matrix(cube_norm, end_points_row, end_points_col, satobj_h1):
+   sorted_row = sorted(end_points_row)
+   sorted_col = sorted(end_points_col)
+   
+   rows_water = []
+   cols_water = []
+   pixelNr=0
+   rss_matrix = []
+   
+   for i in range(sorted_row[1], sorted_row[-2]+1): #iterating from second smallest to secound biggest and the secound biigest value
+        for j in range(sorted_col[1], sorted_col[-2]+1):
+            if globe.is_ocean(satobj_h1.latitudes[i][j], satobj_h1.longitudes[i][j]): ## sjekke rekkefølgen på disse 
+                if (not np.isnan(cube_norm[i][j]).any()):
+                    rows_water.append(i)
+                    cols_water.append(j)
+
+                    pixelNr=pixelNr+1
+
+   for i in range(len(rows_water)):
+    rss_matrix.append(cube_norm[rows_water[i]][cols_water[i]])
+
+   print("Pixel number: ", pixelNr)
+   return np.array(rss_matrix)
