@@ -34,14 +34,14 @@ def rss_matrix(band, row, column, l1d_cube):
         for j in range(sorted_col[1], sorted_col[-2]+1):
             pixelNr=pixelNr+1
 
-    rss_matrix = np.zeros((110, pixelNr)) #floats
+    rss_matrix = np.zeros((109, pixelNr)) #floats
     #print(pixelNr)
     pixelNr = 0
 
     for i in range(sorted_row[1], sorted_row[-2]+1): #iterating from second smallest to secound biggest and the secound biigest value
         for j in range(sorted_col[1], sorted_col[-2]+1):
-            for k in range(5,115):
-                rss_matrix[k-5][pixelNr] = l1d_cube[i,j,k]
+            for k in range(9,118):
+                rss_matrix[k-9][pixelNr] = l1d_cube[i,j,k]
             pixelNr=pixelNr+1
     print("Pixel number: ", pixelNr)
     return rss_matrix
@@ -62,13 +62,13 @@ def water_masked_rss_matrix(row, column, l1d_cube, satobj_h1 ):
     
                 pixelNr=pixelNr+1
 
-    rss_matrix = np.zeros((110, pixelNr)) #floats
+    rss_matrix = np.zeros((109, pixelNr)) #floats
     #print(pixelNr)
     pixelNr = 0
 
     for i in range(len(rows_water)):
-        for k in range(5,115):
-            rss_matrix[k-5][pixelNr] = l1d_cube[rows_water[i],cols_water[i],k]
+        for k in range(9,118):
+            rss_matrix[k-9][pixelNr] = l1d_cube[rows_water[i],cols_water[i],k]
         pixelNr=pixelNr+1
     print("Pixel number: ", pixelNr)
     return rss_matrix
